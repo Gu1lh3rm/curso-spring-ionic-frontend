@@ -3,7 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
-
+import { AuthService } from '../providers/auth/auth-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -12,8 +12,16 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage: any;
+  
+  pages: Array<{title: string, component?: string}>;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, afAuth: AngularFireAuth) {
+  constructor(
+    platform: Platform, 
+    statusBar: StatusBar, 
+    splashScreen: SplashScreen, 
+    afAuth: AngularFireAuth,
+    private authService: AuthService
+    ) {
     afAuth.authState.subscribe(user => {
       if (user) {
         this.rootPage = 'HomePage';
@@ -28,8 +36,31 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
+    
+    this.pages = [
+      { title: 'Sair' }
+    ];
+
   }
+
+  openPage(page) {
+    if (page.title == 'Sair'){
+      this.authService.signOut();
+    }   
+  }
+ 
+  signOut() {
+    this.authService.signOut().then(() => {
+      this.rootPage = 'LoginPage'; // Método não é necessário pois o afAuth.authState.subscribe faz a verificação de usuário logado
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
 }
+
 
 // export class MyApp {
 //   @ViewChild(Nav) nav: Nav;
@@ -49,18 +80,18 @@ export class MyApp {
 //         authObserver.unsubscribe();
 //       }
 //     })
-//     /*
-//       Comentado pois está sendo feita uma verificação de usuário logado no firebase
-//       this.initializeApp();
-//     */
+    /*
+      Comentado pois está sendo feita uma verificação de usuário logado no firebase
+      this.initializeApp();
+    */
 
 
-//     // used for an example of ngFor and navigation
-//     this.pages = [
-//       { title: 'Login', component: 'LoginPage' }
-//     ];
+    // used for an example of ngFor and navigation
+  //   this.pages = [
+  //     { title: 'Login', component: 'LoginPage' }
+  //   ];
 
-//   }
+  // }
 
 //   initializeApp() {
 //     this.platform.ready().then(() => {

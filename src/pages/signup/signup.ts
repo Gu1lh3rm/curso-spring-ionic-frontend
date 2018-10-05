@@ -29,16 +29,6 @@ export class SignupPage {
           toast.setMessage('Usuário criado com sucesso.');
           toast.present();
           
-          // this.authService.sendEmailVerification(this.user)
-          // .then((user: any) => {
-          //   alert("Email de verificação enviado!");
-          // })
-          // .catch((error: any) => {
-          //   alert("Erro no enviado do email de verificação: " + error);
-    
-          // });
-
-
           this.navCtrl.setRoot('HomePage');
         })
         .catch((error: any) => {

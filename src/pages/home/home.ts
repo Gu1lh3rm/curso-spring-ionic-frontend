@@ -15,7 +15,6 @@ export class HomePage {
   }
 
   signOut() {
-    alert("Sair");
     this.authService.signOut().then(() => {
       this.navCtrl.setRoot('LoginPage');
     })

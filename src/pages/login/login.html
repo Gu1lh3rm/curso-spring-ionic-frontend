@@ -1,5 +1,6 @@
-<ion-content padding="">
 
+<!DOCTYPE HTML>
+<ion-content padding="false">
   <form>
     <ion-item>
         <ion-label stacked>Email</ion-label>
@@ -9,7 +10,8 @@
         <ion-label stacked>Senha</ion-label>
         <ion-input type="password"></ion-input>
     </ion-item>
-    <button ion-button block>Entra</button>
+    <button ion-button block (click)="login()">Entra</button>
 </form>
 <button ion-button block outline>Registrar</button>
+
 </ion-content>

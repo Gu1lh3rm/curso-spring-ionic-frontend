@@ -20,6 +20,14 @@ export class SigninPage {
     private authService: AuthService) {
   }
 
+  public signUp(){
+    this.navCtrl.setRoot('SignupPage');
+  }
+
+  public resetPassword() {
+    this.navCtrl.push('ResetpasswordPage');
+  }
+
   signIn() {
     if (this.from.form.valid) {
       let toast = this.toastCtrl.create({ duration: 3000, position: 'bottom' });

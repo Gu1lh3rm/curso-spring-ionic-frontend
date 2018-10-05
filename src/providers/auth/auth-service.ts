@@ -11,4 +11,16 @@ export class AuthService {
     constructor(private angularFireAuth: AngularFireAuth){
         this.user = angularFireAuth.authState;
     }
+
+    createUser(user: User) {
+        return this.angularFireAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+    }
+
+    sendEmailVerification(user: User) {
+        return this.angularFireAuth.auth.currentUser.sendEmailVerification();
+    }
+
+    signOut() {
+        return this.angularFireAuth.auth.signOut();
+    }
 }

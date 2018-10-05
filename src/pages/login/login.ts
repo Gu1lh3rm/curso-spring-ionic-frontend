@@ -24,4 +24,8 @@ export class LoginPage {
     this.navCtrl.setRoot('HomePage');
   }
 
+  public signup(){
+    this.navCtrl.setRoot('SignupPage');
+  }
+
 }

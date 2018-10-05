@@ -1,2 +1,5 @@
 1 - Para criar a aplicação
 ionic start CursoSpringIonic sidemenu
+
+2 - Para adicionar uma página
+ionic generate page signup

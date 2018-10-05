@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 
 @Component({
@@ -14,8 +15,21 @@ export class MyApp {
 
   pages: Array<{title: string, component: string}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, afAuth: AngularFireAuth) {
+    const authObserver = afAuth.authState.subscribe(user => {
+      if (user) {
+        this.rootPage = 'LoginPage';
+        authObserver.unsubscribe();
+      } else {
+        this.rootPage = 'HomePage';
+        authObserver.unsubscribe();
+      }
+    })
+    /*
+      Comentado pois está sendo feita uma verificação de usuário logado no firebase
+      this.initializeApp();
+    */
+
 
     // used for an example of ngFor and navigation
     this.pages = [

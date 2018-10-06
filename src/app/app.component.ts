@@ -20,8 +20,7 @@ export class MyApp {
     statusBar: StatusBar, 
     splashScreen: SplashScreen, 
     afAuth: AngularFireAuth,
-    private authService: AuthService
-    ) {
+    private authService: AuthService) {
     afAuth.authState.subscribe(user => {
       if (user) {
         this.rootPage = 'HomePage';
@@ -39,6 +38,7 @@ export class MyApp {
 
     
     this.pages = [
+      { title: 'Categorias', component: 'CategoriasPage' },
       { title: 'Sair' }
     ];
 
@@ -47,7 +47,9 @@ export class MyApp {
   openPage(page) {
     if (page.title == 'Sair'){
       this.authService.signOut();
-    }   
+    } else {
+      this.nav.setRoot(page.component);
+    }
   }
  
   signOut() {
@@ -58,7 +60,6 @@ export class MyApp {
       console.error(error);
     });
   }
-
 }
 
 

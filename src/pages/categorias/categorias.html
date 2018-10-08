@@ -1,18 +1,20 @@
-<!--
-  Generated template for the CategoriasPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
+<!DOCTYPE HTML>
 <ion-header>
-
   <ion-navbar>
-    <ion-title>categorias</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Categorias</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
-
+  <ion-list>
+    <button ion-item *ngFor="let item of items">
+      <ion-thumbnail item-start>
+        <img src="{{bucketUrl}}/{{item.img_url}}.jpg">
+      </ion-thumbnail>
+      <h2> {{ item.nome }} </h2>
+    </button>
+  </ion-list>
 </ion-content>

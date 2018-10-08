@@ -10,11 +10,19 @@ export class CategoriaProvider {
   constructor(
     public http: HttpClient
     ) {
-    console.log('Hello CategoriaProvider Provider');
+   
   }
 
   public findAll(): Observable<CategoriaDTO[]>  {
     return this.http.get<CategoriaDTO[]>(`${API_CONFIG.baseUrl}/categorias`);
-}
+  }
+
+  public findAllBucketUrl(name,id): Observable<any>{
+    return this.http.get<any>(`${API_CONFIG.bucketBaseUrl}/${name}${id}.jpg`);
+  }
+
+  // public findAllBucketUrl(name)  {
+  //   return this.http.get(`https://firebasestorage.googleapis.com/v0/b/gml-curso-spring-ionic-front.appspot.com/o/cat${name}.jpg`);
+  // }
 
 }

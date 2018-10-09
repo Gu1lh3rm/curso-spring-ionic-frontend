@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -8,10 +11,12 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { MyApp } from './app.component';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../providers/auth/auth-service';
 import { CategoriaProvider } from '../providers/categoria/categoria';
+
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorProvider } from '../providers/interceptor/interceptor';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZFHkdEuyiOV_TIwaZKXCKfFZroZ1rIPo",
@@ -30,7 +35,9 @@ const firebaseConfig = {
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -41,7 +48,9 @@ const firebaseConfig = {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
-    CategoriaProvider
+    CategoriaProvider,
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorProvider, multi: true },
+    InterceptorProvider
   ]
 })
 export class AppModule {}

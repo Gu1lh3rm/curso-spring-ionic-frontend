@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { CategoriasPage } from './categorias';
-import { HttpClientModule } from '@angular/common/http';
 import { CategoriaProvider } from '../../providers/categoria/categoria';
 
 @NgModule({
@@ -9,8 +8,7 @@ import { CategoriaProvider } from '../../providers/categoria/categoria';
     CategoriasPage,
   ],
   imports: [
-    IonicPageModule.forChild(CategoriasPage),
-    HttpClientModule
+    IonicPageModule.forChild(CategoriasPage)
   ],
   providers: [
     CategoriaProvider

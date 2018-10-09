@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { AuthService } from '../../providers/auth/auth-service';
-
+import { HttpClient } from '@angular/common/http';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,10 @@ import { AuthService } from '../../providers/auth/auth-service';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, private authService: AuthService) {
+  authenticated = false;
+  message = '';
+
+  constructor(public navCtrl: NavController, private authService: AuthService, private http: HttpClient, private storage: Storage) {
 
   }
 

@@ -21,8 +21,4 @@ export class CategoriaProvider {
     return this.http.get<any>(`${API_CONFIG.bucketBaseUrl}/${name}${id}.jpg`);
   }
 
-  // public findAllBucketUrl(name)  {
-  //   return this.http.get(`https://firebasestorage.googleapis.com/v0/b/gml-curso-spring-ionic-front.appspot.com/o/cat${name}.jpg`);
-  // }
-
 }

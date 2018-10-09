@@ -30,8 +30,6 @@ export class MyApp {
     });
 
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     });
@@ -61,51 +59,3 @@ export class MyApp {
     });
   }
 }
-
-
-// export class MyApp {
-//   @ViewChild(Nav) nav: Nav;
-
-//   rootPage: any;
-
-//   pages: Array<{title: string, component: string}>;
-
-//   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, afAuth: AngularFireAuth) {
-//     const authObserver = afAuth.authState.subscribe(user => {
-//       alert(user);
-//       if (user) {
-//         this.rootPage = 'LoginPage';
-//         authObserver.unsubscribe();
-//       } else {
-//         this.rootPage = 'HomePage';
-//         authObserver.unsubscribe();
-//       }
-//     })
-    /*
-      Comentado pois está sendo feita uma verificação de usuário logado no firebase
-      this.initializeApp();
-    */
-
-
-    // used for an example of ngFor and navigation
-  //   this.pages = [
-  //     { title: 'Login', component: 'LoginPage' }
-  //   ];
-
-  // }
-
-//   initializeApp() {
-//     this.platform.ready().then(() => {
-//       // Okay, so the platform is ready and our plugins are available.
-//       // Here you can do any higher level native things you might need.
-//       this.statusBar.styleDefault();
-//       this.splashScreen.hide();
-//     });
-//   }
-
-//   openPage(page) {
-//     // Reset the content nav to have just this page
-//     // we wouldn't want the back button to show in this scenario
-//     this.nav.setRoot(page.component);
-//   }
-// }

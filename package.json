@@ -24,6 +24,7 @@
     "@ionic-native/splash-screen": "~4.15.0",
     "@ionic-native/status-bar": "~4.15.0",
     "@ionic/storage": "2.2.0",
+    "angular2-jwt": "^0.2.3",
     "angularfire2": "^5.0.2",
     "firebase": "^5.5.3",
     "ionic": "^4.2.0",

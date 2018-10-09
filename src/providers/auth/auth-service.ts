@@ -7,9 +7,13 @@ import { HttpClient } from '@angular/common/http';
 import { API_CONFIG } from '../../config/api.config';
 import { LocalUser } from '../../models/local_user';
 import { StorageProvider } from '../storage/storage';
+import { JwtHelper } from 'angular2-jwt';
 
 @Injectable()
 export class AuthService {
+    
+    jwtHelper: JwtHelper = new JwtHelper();
+    
     user: Observable<firebase.User>;
 
     constructor(private angularFireAuth: AngularFireAuth, public http: HttpClient, public storage: StorageProvider){
@@ -26,7 +30,8 @@ export class AuthService {
     successfullLogin(authorizationValue : string) {
         let tok = authorizationValue.substring(7);
         let user : LocalUser = {
-            token: tok
+            token: tok,
+            email: this.jwtHelper.decodeToken(tok).sub
         };
         this.storage.setLocalUser(user);
     }

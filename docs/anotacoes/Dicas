@@ -3,3 +3,6 @@ ionic start CursoSpringIonic sidemenu
 
 2 - Para adicionar uma página
 ionic generate page signup
+
+3 - Dependencia para manipular o token 
+npm install --save angular2-jwt

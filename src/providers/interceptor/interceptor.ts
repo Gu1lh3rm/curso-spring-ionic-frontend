@@ -1,11 +1,10 @@
 import { AlertController } from 'ionic-angular';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { Injectable, ComponentFactoryResolver } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
  
 import { Observable } from 'rxjs';
 import { _throw } from 'rxjs/observable/throw';
-import { catchError, mergeMap } from 'rxjs/operators';
  
 @Injectable()
 export class InterceptorProvider implements HttpInterceptor {

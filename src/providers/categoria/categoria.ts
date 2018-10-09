@@ -14,7 +14,7 @@ export class CategoriaProvider {
   }
 
   public findAll(): Observable<CategoriaDTO[]>  {
-    return this.http.get<CategoriaDTO[]>(`${API_CONFIG.baseUrl}/categorias`);
+    return this.http.get<CategoriaDTO[]>(`${API_CONFIG.baseUrl}/api/categorias`);
   }
 
   public findAllBucketUrl(name,id): Observable<any>{

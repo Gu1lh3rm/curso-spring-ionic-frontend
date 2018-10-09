@@ -33,8 +33,17 @@ export class SigninPage {
       let toast = this.toastCtrl.create({ duration: 3000, position: 'bottom' });
 
       this.authService.signIn(this.user)
-      .then(() => {
-        this.navCtrl.setRoot('HomePage');
+      .then((response_firebase) => {
+        console.log(response_firebase);
+        this.authService.authenticate(this.user)
+        .subscribe(response => {
+          console.log(response.headers.get('Authorization'));
+          this.navCtrl.setRoot('HomePage');
+        },
+        error => {
+          this.authService.signOut();
+        });
+        
       })
       .catch((error: any) => {
         if (error.code  == 'auth/invalid-email') {

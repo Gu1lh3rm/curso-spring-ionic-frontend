@@ -5,9 +5,6 @@ import { CategoriaProvider } from '../../providers/categoria/categoria';
 import { CategoriaDTO } from '../../providers/categoria/categoria.dto';
 import { API_CONFIG } from '../../config/api.config';
 
-import { AuthService } from '../../providers/auth/auth-service';
-import { Storage } from '@ionic/storage';
-
 @IonicPage()
 @Component({
   selector: 'page-categorias',
@@ -25,9 +22,7 @@ export class CategoriasPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public http: HttpClient,
-    public categoriaProvider: CategoriaProvider,
-    private authService: AuthService, 
-    private storage: Storage) {
+    public categoriaProvider: CategoriaProvider) {
   }
 
   ionViewDidLoad() {

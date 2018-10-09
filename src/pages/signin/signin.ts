@@ -37,7 +37,7 @@ export class SigninPage {
         console.log(response_firebase);
         this.authService.authenticate(this.user)
         .subscribe(response => {
-          console.log(response.headers.get('Authorization'));
+          this.authService.successfullLogin(response.headers.get('Authorization'));
           this.navCtrl.setRoot('HomePage');
         },
         error => {

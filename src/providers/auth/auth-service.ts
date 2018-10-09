@@ -5,12 +5,14 @@ import { User } from './user';
 import * as firebase from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
 import { API_CONFIG } from '../../config/api.config';
+import { LocalUser } from '../../models/local_user';
+import { StorageProvider } from '../storage/storage';
 
 @Injectable()
 export class AuthService {
     user: Observable<firebase.User>;
 
-    constructor(private angularFireAuth: AngularFireAuth, public http: HttpClient){
+    constructor(private angularFireAuth: AngularFireAuth, public http: HttpClient, public storage: StorageProvider){
         this.user = angularFireAuth.authState;
     }
 
@@ -19,6 +21,14 @@ export class AuthService {
             observe: 'response',
             responseType: 'text'
         });
+    }
+
+    successfullLogin(authorizationValue : string) {
+        let tok = authorizationValue.substring(7);
+        let user : LocalUser = {
+            token: tok
+        };
+        this.storage.setLocalUser(user);
     }
 
     createUser(user: User) {
@@ -34,6 +44,7 @@ export class AuthService {
     }
 
     signOut() {
+        this.storage.setLocalUser(null);
         return this.angularFireAuth.auth.signOut();
     }
 

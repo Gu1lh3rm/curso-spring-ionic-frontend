@@ -7,8 +7,10 @@
   </ion-navbar>
 
 </ion-header>
-
-
 <ion-content padding>
-{{email}}
+  <ion-avatar center>
+    <img class="circle" [src]="cliente?.imgUrl || 'assets/imgs/avatar-blank.png'">
+  </ion-avatar>
+  <h2 text-center>{{ cliente?.nome }}</h2>
+  <p text-center>{{ cliente?.email }}</p>
 </ion-content>

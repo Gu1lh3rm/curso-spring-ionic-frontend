@@ -18,6 +18,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorProvider } from '../providers/interceptor/interceptor';
 import { StorageProvider } from '../providers/storage/storage';
+import { ClienteProvider } from '../providers/cliente/cliente';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZFHkdEuyiOV_TIwaZKXCKfFZroZ1rIPo",
@@ -52,7 +53,8 @@ const firebaseConfig = {
     CategoriaProvider,
     {provide: HTTP_INTERCEPTORS, useClass: InterceptorProvider, multi: true },
     InterceptorProvider,
-    StorageProvider
+    StorageProvider,
+    ClienteProvider
   ]
 })
 export class AppModule {}

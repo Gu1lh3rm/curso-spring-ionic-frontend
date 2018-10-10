@@ -26,20 +26,17 @@ export class ErrorInterceptorProvider implements HttpInterceptor {
                 errorObj = JSON.parse(errorObj);
             }
             
-            msg = errorObj.message + '<br>Contate o Administrador';
- 
-            let alert = this.alertCtrl.create({
-                title: error.name,
-                message: msg,
-                buttons: ['OK']
-            });
-            alert.present();
-
             console.log("Erro detectado pelo ErrorInterceptorProvider:");
             console.log(errorObj);
             
             switch(errorObj.status) {
+                case 403: this.handle401();
+                break;
                 case 403: this.handle403();
+                break;
+                default: this.handleDefaultError(errorObj);
+                break;
+
             }
 
             return Observable.throw(errorObj);
@@ -49,6 +46,34 @@ export class ErrorInterceptorProvider implements HttpInterceptor {
 
     handle403() {
         this.authService.signOut();
+    }
+
+    handle401() {
+        let alert = this.alertCtrl.create({
+            title: 'Erro 401: falha de autenticação',
+            message: 'Email ou senha incorretos',
+            enableBackdropDismiss: false,
+            buttons: [
+                {
+                    text: 'OK'
+                }
+            ]
+        });
+        alert.present();
+    }
+
+    handleDefaultError(errorObj) {
+        let alert = this.alertCtrl.create({
+            title: 'Erro' + errorObj.status + ': ' + errorObj.error,
+            message: errorObj.message,
+            enableBackdropDismiss: false,
+            buttons: [
+                {
+                    text: 'OK'
+                }
+            ]
+        });
+        alert.present();
     }
 }
 

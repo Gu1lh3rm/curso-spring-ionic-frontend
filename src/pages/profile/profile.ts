@@ -4,6 +4,7 @@ import { StorageProvider } from '../../providers/storage/storage';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { ClienteProvider } from '../../providers/cliente/cliente';
 import { API_CONFIG } from '../../config/api.config';
+import { AuthService } from '../../providers/auth/auth-service';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,12 @@ export class ProfilePage {
   bucketUrl: string = API_CONFIG.bucketBaseUrl;
   cliente: ClienteDTO;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: StorageProvider, public clienteProvider: ClienteProvider) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public storage: StorageProvider, 
+    public clienteProvider: ClienteProvider,
+    private authService: AuthService) {
   }
 
   ionViewDidLoad() {
@@ -30,7 +36,11 @@ export class ProfilePage {
         }
         this.cliente = response;
         
-      }, error => {});
+      }, error => {
+        if (error.status == 403) {
+          this.authService.signOut();
+        }
+      });
     }
   }
 

@@ -5,11 +5,13 @@ import { Storage } from '@ionic/storage';
  
 import { Observable } from 'rxjs';
 import { _throw } from 'rxjs/observable/throw';
+import { StorageProvider } from '../storage/storage';
+import { AuthService } from '../auth/auth-service';
  
 @Injectable()
 export class ErrorInterceptorProvider implements HttpInterceptor {
  
-    constructor(private storage: Storage, private alertCtrl: AlertController) { }
+    constructor(private storage: StorageProvider, private alertCtrl: AlertController, private authService: AuthService) { }
  
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log("Passou no ErrorInterceptor");
@@ -23,11 +25,8 @@ export class ErrorInterceptorProvider implements HttpInterceptor {
             if (!errorObj.status) {
                 errorObj = JSON.parse(errorObj);
             }
-
             
             msg = errorObj.message + '<br>Contate o Administrador';
-            
-            
  
             let alert = this.alertCtrl.create({
                 title: error.name,
@@ -36,11 +35,20 @@ export class ErrorInterceptorProvider implements HttpInterceptor {
             });
             alert.present();
 
-            console.log("Erro detectado pelo interceptor:");
+            console.log("Erro detectado pelo ErrorInterceptorProvider:");
             console.log(errorObj);
+            
+            switch(errorObj.status) {
+                case 403: this.handle403();
+            }
+
             return Observable.throw(errorObj);
 
         }) as any;
+    }
+
+    handle403() {
+        this.authService.signOut();
     }
 }
 

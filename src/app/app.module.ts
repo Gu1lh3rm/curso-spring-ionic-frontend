@@ -16,9 +16,11 @@ import { CategoriaProvider } from '../providers/categoria/categoria';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InterceptorProvider } from '../providers/interceptor/interceptor';
+import { ErrorInterceptorProvider } from '../providers/interceptor/error-interceptor';
 import { StorageProvider } from '../providers/storage/storage';
 import { ClienteProvider } from '../providers/cliente/cliente';
+import { AuthInterceptorProvider } from '../providers/interceptor/auth-interceptor';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZFHkdEuyiOV_TIwaZKXCKfFZroZ1rIPo",
@@ -51,10 +53,13 @@ const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
     CategoriaProvider,
-    {provide: HTTP_INTERCEPTORS, useClass: InterceptorProvider, multi: true },
-    InterceptorProvider,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorProvider, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorProvider, multi: true },
     StorageProvider,
-    ClienteProvider
+    ClienteProvider,
+    AuthInterceptorProvider,
+    ErrorInterceptorProvider
+    
   ]
 })
 export class AppModule {}

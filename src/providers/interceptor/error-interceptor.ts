@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
 import { _throw } from 'rxjs/observable/throw';
  
 @Injectable()
-export class InterceptorProvider implements HttpInterceptor {
+export class ErrorInterceptorProvider implements HttpInterceptor {
  
     constructor(private storage: Storage, private alertCtrl: AlertController) { }
  
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log("Passou no interceptor");
+        console.log("Passou no ErrorInterceptor");
         return next.handle(request)
         .catch((error, caught) => {
             let msg = "";
@@ -44,9 +44,9 @@ export class InterceptorProvider implements HttpInterceptor {
     }
 }
 
-export const ErrorInterceptorProvider = {
+export const ErrorInterceptor = {
     provide: HTTP_INTERCEPTORS,
-    userClass: InterceptorProvider,
+    userClass: ErrorInterceptorProvider,
     multi: true,
 }
  

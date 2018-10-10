@@ -6,6 +6,3 @@ ionic generate page signup
 
 3 - Dependencia para manipular o token 
 npm install --save angular2-jwt
-
-4 - Instalação do bootstarp
-npm install bootstrap

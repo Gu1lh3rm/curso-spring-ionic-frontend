@@ -1,8 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../providers/auth/user';
 import { AuthService } from '../../providers/auth/auth-service';
+import { CidadeProvider } from '../../providers/cidade/cidade';
+import { EstadoProvider } from '../../providers/estado/estado';
+import { EstadoDTO } from '../../providers/estado/estado.dto';
+import { CidadeDTO } from '../../providers/cidade/cidade.dto';
 
 @IonicPage()
 @Component({
@@ -12,12 +16,55 @@ import { AuthService } from '../../providers/auth/auth-service';
 export class SignupPage {
   user: User = new User();
   @ViewChild('form') from: NgForm;
+  formGroup: FormGroup;
+
+  estados: EstadoDTO[];
+  cidades: CidadeDTO[];
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private toastCtrl: ToastController,
-    private authService: AuthService) {
+    private authService: AuthService,
+    public formBuilder: FormBuilder,
+    public cidadeProvider: CidadeProvider,
+    public estadoProvider: EstadoProvider) {
+
+      this.formGroup = this.formBuilder.group({
+        nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
+        email: ['joaquim@gmail.com', [Validators.required, Validators.email]],
+        tipo : ['1', [Validators.required]],
+        cpfOuCnpj : ['06134596280', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
+        senha : ['123', [Validators.required]],
+        logradouro : ['Rua Via', [Validators.required]],
+        numero : ['25', [Validators.required]],
+        complemento : ['Apto 3', []],
+        bairro : ['Copacabana', []],
+        cep : ['10828333', [Validators.required]],
+        telefone1 : ['977261827', [Validators.required]],
+        telefone2 : ['', []],
+        telefone3 : ['', []],
+        estadoId : [null, [Validators.required]],
+        cidadeId : [null, [Validators.required]]
+      });
+  }
+
+  ionViewDidLoad() {
+    this.estadoProvider.findAll()
+    .subscribe(response_estados => {
+      this.estados = response_estados;
+      this.formGroup.controls.estadoId.setValue(this.estados[0].id);
+      this.updateCidades();
+    }, error => {});
+  }
+
+  updateCidades(){
+    let estado_id = this.formGroup.value.estadoId;
+    this.cidadeProvider.findAll(estado_id)
+    .subscribe(cidade_response => {
+      this.cidades = cidade_response;
+      this.formGroup.controls.cidadeId.setValue(null);
+    }, error => {});
   }
 
   signup(){

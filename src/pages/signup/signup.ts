@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 import { NgForm, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../providers/auth/user';
 import { AuthService } from '../../providers/auth/auth-service';
@@ -7,6 +7,7 @@ import { CidadeProvider } from '../../providers/cidade/cidade';
 import { EstadoProvider } from '../../providers/estado/estado';
 import { EstadoDTO } from '../../providers/estado/estado.dto';
 import { CidadeDTO } from '../../providers/cidade/cidade.dto';
+import { ClienteProvider } from '../../providers/cliente/cliente';
 
 @IonicPage()
 @Component({
@@ -28,14 +29,16 @@ export class SignupPage {
     private authService: AuthService,
     public formBuilder: FormBuilder,
     public cidadeProvider: CidadeProvider,
-    public estadoProvider: EstadoProvider) {
+    public estadoProvider: EstadoProvider,
+    public clienteProvider: ClienteProvider,
+    public alertCtrl: AlertController) {
 
       this.formGroup = this.formBuilder.group({
         nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
         email: ['joaquim@gmail.com', [Validators.required, Validators.email]],
         tipo : ['1', [Validators.required]],
         cpfOuCnpj : ['06134596280', [Validators.required, Validators.minLength(11), Validators.maxLength(14)]],
-        senha : ['123', [Validators.required]],
+        password : ['123', [Validators.required]],
         logradouro : ['Rua Via', [Validators.required]],
         numero : ['25', [Validators.required]],
         complemento : ['Apto 3', []],
@@ -72,7 +75,27 @@ export class SignupPage {
   }
 
   signupUser() {
-    console.log("enviou o form");
+    this.clienteProvider.clienteInsert(this.formGroup.value)
+    .subscribe(cliente_response => {
+      this.showInserOK();
+    }, error => {});
+  }
+
+  showInserOK() {
+    let alert = this.alertCtrl.create({
+      title: 'Sucesso!',
+      message: 'Cadastro efetuado com sucesso',
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: 'OK',
+          handler : () => {
+            this.navCtrl.pop();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   createAccount(){

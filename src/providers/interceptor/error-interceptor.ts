@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { _throw } from 'rxjs/observable/throw';
 import { StorageProvider } from '../storage/storage';
 import { AuthService } from '../auth/auth-service';
+import { FieldMessage } from '../../models/fieldmessage';
  
 @Injectable()
 export class ErrorInterceptorProvider implements HttpInterceptor {
@@ -33,6 +34,8 @@ export class ErrorInterceptorProvider implements HttpInterceptor {
                 case 403: this.handle401();
                 break;
                 case 403: this.handle403();
+                break;
+                case 422: this.handle422(errorObj);
                 break;
                 default: this.handleDefaultError(errorObj);
                 break;
@@ -62,6 +65,23 @@ export class ErrorInterceptorProvider implements HttpInterceptor {
         alert.present();
     }
 
+    handle422(errorObj) {
+        let alert = this.alertCtrl.create({
+            title: 'Erro 422: Validação',
+            message: this.listErrors(errorObj.errors),
+            enableBackdropDismiss: false,
+            buttons: [
+                {
+                    text: 'OK'
+                }
+            ]
+        });
+        console.log("teste alert");
+        alert.present();
+    }
+
+
+    
     handleDefaultError(errorObj) {
         let alert = this.alertCtrl.create({
             title: 'Erro' + errorObj.status + ': ' + errorObj.error,
@@ -74,6 +94,14 @@ export class ErrorInterceptorProvider implements HttpInterceptor {
             ]
         });
         alert.present();
+    }
+
+    private listErrors(messages : FieldMessage[]) : string {
+        let s : string = '';
+        for (var i=0; i<messages.length; i++) {
+            s = s + '<p><strong>' + messages[i].fieldName + "</strong>: " + messages[i].message + '</p>';
+        }
+        return s;
     }
 }
 

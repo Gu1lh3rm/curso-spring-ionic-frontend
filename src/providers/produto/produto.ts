@@ -9,7 +9,7 @@ export class ProdutoProvider {
     console.log('Hello ProdutoProvider Provider');
   }
 
-  findByCategoria(categoria_id : string) {
+  findByCategoria(categoria_id : number) {
     return this.http.get(`${API_CONFIG.baseUrl}/api/produtos/page?categorias=${categoria_id}`);
   }
 

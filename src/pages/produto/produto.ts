@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProdutoDTO } from '../../providers/produto/produto..dto';
 import { ProdutoProvider } from '../../providers/produto/produto';
+import { API_CONFIG } from '../../config/api.config';
 
 /**
  * Generated class for the ProdutoPage page.
@@ -16,6 +17,8 @@ import { ProdutoProvider } from '../../providers/produto/produto';
   templateUrl: 'produto.html',
 })
 export class ProdutoPage {
+  
+  bucketUrl: string = API_CONFIG.bucketBaseUrl;
 
   items: ProdutoDTO[];
 
@@ -29,19 +32,6 @@ export class ProdutoPage {
     .subscribe(categoria_response => {
       this.items = categoria_response['content'];
     }, error => {});
-
-    // this.items = [
-    //   {
-    //     id: "1",
-    //     nome: "Mouse",
-    //     preco: 80.99
-    //   },
-    //   {
-    //     id: "2",
-    //     nome: 'Teclado',
-    //     preco: 100.00
-    //   }
-    // ]
   }
 
 }

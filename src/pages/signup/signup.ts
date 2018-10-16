@@ -20,6 +20,14 @@ export class SignupPage {
     private authService: AuthService) {
   }
 
+  signup(){
+    console.log("Teste signup");
+  }
+
+  signupUser() {
+    console.log("enviou o form");
+  }
+
   createAccount(){
     if (this.from.form.valid) {
       let toast = this.toastCtrl.create({ duration: 3000, position: 'bottom' });

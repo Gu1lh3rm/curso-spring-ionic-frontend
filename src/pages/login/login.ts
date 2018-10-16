@@ -21,28 +21,16 @@ export class LoginPage {
     this.menu.swipeEnable(true);
   }
 
-  ionViewDidEnter() {
-    console.log("teste ionViewdidEnter");
-          //console.log(response);
-    this.authService.refreshToken()
-        .subscribe(response => {
-          this.authService.successfullLogin(response.headers.get('Authorization'));
-        },
-        error => {
-          this.authService.signOut();
-        });
-  }
-
   public login(){
     this.navCtrl.setRoot('HomePage');
   }
 
   public signup(){
-    this.navCtrl.setRoot('SignupPage');
+    this.navCtrl.push('SignupPage');
   }
 
   public signin(){
-    this.navCtrl.setRoot('SigninPage');
+    this.navCtrl.push('SigninPage');
   }
 
 }

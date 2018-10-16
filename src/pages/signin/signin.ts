@@ -34,7 +34,10 @@ export class SigninPage {
 
       this.authService.signIn(this.user)
       .then((response_firebase) => {
-        console.log(response_firebase);
+        //console.log(response_firebase);
+        
+        console.log("teste de login");
+
         this.authService.authenticate(this.user)
         .subscribe(response => {
           this.authService.successfullLogin(response.headers.get('Authorization'));

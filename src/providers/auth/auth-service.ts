@@ -20,8 +20,10 @@ export class AuthService {
         this.user = angularFireAuth.authState;
     }
 
-    authenticate(user: User) {
-        return this.http.post(`${API_CONFIG.baseUrl}/login`, user, {
+    authenticate(creds: User) {
+        console.log("teste de login");
+        console.log(creds);
+        return this.http.post(`${API_CONFIG.baseUrl}/login`, creds, {
             observe: 'response',
             responseType: 'text'
         });

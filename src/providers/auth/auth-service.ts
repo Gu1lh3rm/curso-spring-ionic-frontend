@@ -57,7 +57,7 @@ export class AuthService {
 
     signOut() {
         this.storage.setLocalUser(null);
-        return this.angularFireAuth.auth.signOut();
+        
     }
 
     resetPassword(email: string){

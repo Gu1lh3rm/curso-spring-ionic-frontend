@@ -17,22 +17,8 @@ export class HomePage {
   constructor(public navCtrl: NavController, private authService: AuthService, private http: HttpClient, private storage: Storage) {
 
   }
-  ionViewDidEnter() {
-    this.authService.refreshToken()
-        .subscribe(response => {
-          this.authService.successfullLogin(response.headers.get('Authorization'));
-        },
-        error => {
-          this.authService.signOut();
-        });
-  }
   signOut() {
-    this.authService.signOut().then(() => {
-      this.navCtrl.setRoot('LoginPage');
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  }
-
+    this.authService.signOut();
+   } 
+  
 }

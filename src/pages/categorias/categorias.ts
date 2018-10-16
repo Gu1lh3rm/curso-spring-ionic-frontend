@@ -34,37 +34,7 @@ export class CategoriasPage {
     });
   }
 
-}
-
-
-/*
-ionViewDidLoad() {
-
-    this.categoriaProvider.findAll()
-    .subscribe(response_items => {
-      console.log(response_items);
-      this.items = response_items;
-      
-      Método pega o token direto do site e cria um objeto lista
-      response_items.forEach(response_item => {
-
-        this.categoriaProvider.findAllBucketUrl("cat", response_item.id)
-        .subscribe(response_firebase => {
-
-          response_item.img_url = response_firebase.name + '?alt=media&token=' + response_firebase.downloadTokens;
-          
-          this.items.push({id: response_item.id, nome: response_item.nome, img_url: response_item.img_url});
-
-        }, error => {
-          console.log(error);
-        });      
-        
-      });
-    
+  showProdutos(){
+    this.navCtrl.push('ProdutoPage');
   }
-  ,
-  error => {
-    console.log(error);
-  });
 }
-*/

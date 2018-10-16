@@ -22,6 +22,7 @@ import { ClienteProvider } from '../providers/cliente/cliente';
 import { AuthInterceptorProvider } from '../providers/interceptor/auth-interceptor';
 import { CidadeProvider } from '../providers/cidade/cidade';
 import { EstadoProvider } from '../providers/estado/estado';
+import { ProdutoProvider } from '../providers/produto/produto';
 
 
 const firebaseConfig = {
@@ -62,7 +63,8 @@ const firebaseConfig = {
     AuthInterceptorProvider,
     ErrorInterceptorProvider,
     CidadeProvider,
-    EstadoProvider
+    EstadoProvider,
+    ProdutoProvider
     
   ]
 })

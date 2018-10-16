@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { API_CONFIG } from '../../config/api.config';
 
-/*
-  Generated class for the ProdutoProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class ProdutoProvider {
 
   constructor(public http: HttpClient) {
     console.log('Hello ProdutoProvider Provider');
+  }
+
+  findByCategoria(categoria_id : string) {
+    return this.http.get(`${API_CONFIG.baseUrl}/api/produtos/page?categorias=${categoria_id}`);
   }
 
 }

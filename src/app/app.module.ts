@@ -64,8 +64,7 @@ const firebaseConfig = {
     ErrorInterceptorProvider,
     CidadeProvider,
     EstadoProvider,
-    ProdutoProvider
-    
+    ProdutoProvider    
   ]
 })
 export class AppModule {}

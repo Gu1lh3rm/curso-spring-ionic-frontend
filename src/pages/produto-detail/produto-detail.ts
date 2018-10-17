@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ProdutoDTO } from '../../providers/produto/produto.dto';
 import { AuthService } from '../../providers/auth/auth-service';
 import { ProdutoProvider } from '../../providers/produto/produto';
+import { CartProvider } from '../../providers/cart/cart';
 
 @IonicPage()
 @Component({
@@ -14,7 +15,7 @@ export class ProdutoDetailPage {
   item: ProdutoDTO;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public produtoProvider: ProdutoProvider,
-    private authService: AuthService) {
+    private authService: AuthService, public cartProvider: CartProvider) {
   }
 
   ionViewDidLoad() {
@@ -29,7 +30,12 @@ export class ProdutoDetailPage {
           this.authService.signOut();
         }
       });
+  }
 
+  addToCart(produto: ProdutoDTO) {
+    this.cartProvider.addProduto(produto);
+    console.log(produto);
+    this.navCtrl.push('CartPage');
   }
 
 }

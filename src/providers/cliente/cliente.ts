@@ -1,10 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { ClienteDTO } from '../../models/cliente.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { StorageProvider } from '../storage/storage';
-import { auth } from 'firebase';
 import { ClienteNewDTO } from '../../models/cliente.new.dto';
 
 @Injectable()
@@ -12,10 +9,10 @@ export class ClienteProvider {
 
   constructor(public http: HttpClient, public storage: StorageProvider) {}
 
-  findByEmail(email: string) : Observable<ClienteDTO> {
+  findByEmail(email: string){
     //let token = this.storage.getLocalUser().token;
     //let authHeader = new HttpHeaders({'Authorization' : 'Bearer ' + token});
-    return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/api/clientes/email?value=${email}`);
+    return this.http.get(`${API_CONFIG.baseUrl}/api/clientes/email?value=${email}`);
   }
 
   clienteInsert(obj : ClienteNewDTO) {

@@ -30,7 +30,7 @@ export class ProfilePage {
       this.clienteProvider.findByEmail(localUser.email)
       .subscribe(response => {
         
-        this.cliente = response;
+        this.cliente = response as ClienteDTO;
         
       }, error => {
         if (error.status == 403) {

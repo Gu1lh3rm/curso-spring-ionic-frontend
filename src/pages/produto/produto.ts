@@ -31,6 +31,13 @@ export class ProdutoPage {
     this.produtoProvider.findByCategoria( categoria_id )
     .subscribe(categoria_response => {
       this.items = categoria_response['content'];
+      
+      this.items.forEach(function(item) {
+        console.log(item.imgUrl);
+        console.log(item.imgSmallUrl);
+      })
+      this.items[0].imgSmallUrl
+
     }, error => {});
   }
 

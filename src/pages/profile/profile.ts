@@ -29,11 +29,7 @@ export class ProfilePage {
     if (localUser && localUser.email) {
       this.clienteProvider.findByEmail(localUser.email)
       .subscribe(response => {
-        if(response.imgUrl){
-          response.imgUrl = this.bucketUrl + response.imgUrl;
-        } else{
-          response.imgUrl = 'assets/imgs/avatar-blank.png'
-        }
+        
         this.cliente = response;
         
       }, error => {

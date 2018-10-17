@@ -34,7 +34,6 @@ export class ProdutoDetailPage {
 
   addToCart(produto: ProdutoDTO) {
     this.cartProvider.addProduto(produto);
-    console.log(produto);
     this.navCtrl.push('CartPage');
   }
 

@@ -8,6 +8,7 @@ import { API_CONFIG } from '../../config/api.config';
 import { LocalUser } from '../../models/local_user';
 import { StorageProvider } from '../storage/storage';
 import { JwtHelper } from 'angular2-jwt';
+import { CartProvider } from '../cart/cart';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     
     user: Observable<firebase.User>;
 
-    constructor(private angularFireAuth: AngularFireAuth, public http: HttpClient, public storage: StorageProvider){
+    constructor(private angularFireAuth: AngularFireAuth, public http: HttpClient, public storage: StorageProvider, public cartProvider: CartProvider){
         this.user = angularFireAuth.authState;
     }
 
@@ -41,6 +42,7 @@ export class AuthService {
             email: this.jwtHelper.decodeToken(tok).sub
         };
         this.storage.setLocalUser(user);
+        this.cartProvider.createOrClearCart();
     }
 
     createUser(user: User) {

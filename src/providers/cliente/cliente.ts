@@ -5,7 +5,7 @@ import { ClienteDTO } from '../../models/cliente.dto';
 import { API_CONFIG } from '../../config/api.config';
 import { StorageProvider } from '../storage/storage';
 import { auth } from 'firebase';
-import { ClienteNewDTO } from './cliente.new.dto';
+import { ClienteNewDTO } from '../../models/cliente.new.dto';
 
 @Injectable()
 export class ClienteProvider {

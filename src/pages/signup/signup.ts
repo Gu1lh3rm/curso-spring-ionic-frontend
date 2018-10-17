@@ -5,8 +5,8 @@ import { User } from '../../providers/auth/user';
 import { AuthService } from '../../providers/auth/auth-service';
 import { CidadeProvider } from '../../providers/cidade/cidade';
 import { EstadoProvider } from '../../providers/estado/estado';
-import { EstadoDTO } from '../../providers/estado/estado.dto';
-import { CidadeDTO } from '../../providers/cidade/cidade.dto';
+import { EstadoDTO } from '../../models/estado.dto';
+import { CidadeDTO } from '../../models/cidade.dto';
 import { ClienteProvider } from '../../providers/cliente/cliente';
 
 @IonicPage()

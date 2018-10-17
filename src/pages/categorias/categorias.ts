@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { CategoriaProvider } from '../../providers/categoria/categoria';
-import { CategoriaDTO } from '../../providers/categoria/categoria.dto';
+import { CategoriaDTO } from '../../models/categoria.dto';
 import { API_CONFIG } from '../../config/api.config';
 
 @IonicPage()

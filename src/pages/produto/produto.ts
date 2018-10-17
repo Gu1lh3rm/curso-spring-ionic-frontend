@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ProdutoDTO } from '../../providers/produto/produto..dto';
+import { ProdutoDTO } from '../../providers/produto/produto.dto';
 import { ProdutoProvider } from '../../providers/produto/produto';
 import { API_CONFIG } from '../../config/api.config';
-
-/**
- * Generated class for the ProdutoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AuthService } from '../../providers/auth/auth-service';
 
 @IonicPage()
 @Component({
@@ -22,7 +16,8 @@ export class ProdutoPage {
 
   items: ProdutoDTO[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public produtoProvider: ProdutoProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public produtoProvider: ProdutoProvider,
+    private authService: AuthService) {
   }
 
   ionViewDidLoad() {
@@ -32,13 +27,15 @@ export class ProdutoPage {
     .subscribe(categoria_response => {
       this.items = categoria_response['content'];
       
-      this.items.forEach(function(item) {
-        console.log(item.imgUrl);
-        console.log(item.imgSmallUrl);
-      })
-      this.items[0].imgSmallUrl
+    }, error => {
+      if (error.status == 403) {
+        this.authService.signOut();
+      }
+    });
+  }
 
-    }, error => {});
+  showProdutosDetail(produto_id : number) {
+    this.navCtrl.push('ProdutoDetailPage', {produto_id: produto_id});
   }
 
 }

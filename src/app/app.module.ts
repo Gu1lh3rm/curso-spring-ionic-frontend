@@ -24,7 +24,6 @@ import { CidadeProvider } from '../providers/cidade/cidade';
 import { EstadoProvider } from '../providers/estado/estado';
 import { ProdutoProvider } from '../providers/produto/produto';
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyBZFHkdEuyiOV_TIwaZKXCKfFZroZ1rIPo",
   authDomain: "gml-curso-spring-ionic-front.firebaseapp.com",
@@ -64,7 +63,7 @@ const firebaseConfig = {
     ErrorInterceptorProvider,
     CidadeProvider,
     EstadoProvider,
-    ProdutoProvider    
+    ProdutoProvider  
   ]
 })
 export class AppModule {}

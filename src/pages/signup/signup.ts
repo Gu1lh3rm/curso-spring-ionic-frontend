@@ -32,7 +32,7 @@ export class SignupPage {
     public estadoProvider: EstadoProvider,
     public clienteProvider: ClienteProvider,
     public alertCtrl: AlertController) {
-
+    
       this.formGroup = this.formBuilder.group({
         nome: ['Joaquim', [Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
         email: ['joaquim@gmail.com', [Validators.required, Validators.email]],
@@ -50,7 +50,9 @@ export class SignupPage {
         estadoId : [null, [Validators.required]],
         cidadeId : [null, [Validators.required]]
       });
+      
   }
+ 
 
   ionViewDidLoad() {
     this.estadoProvider.findAll()

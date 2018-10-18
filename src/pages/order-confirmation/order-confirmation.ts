@@ -7,6 +7,8 @@ import { CartProvider } from '../../providers/cart/cart';
 import { ClienteDTO } from '../../models/cliente.dto';
 import { EnderecoDTO } from '../../models/endereco.dto';
 import { ClienteProvider } from '../../providers/cliente/cliente';
+import { PedidoProvider } from '../../providers/pedido/pedido';
+import { AuthService } from '../../providers/auth/auth-service';
 
 @IonicPage()
 @Component({
@@ -20,7 +22,13 @@ export class OrderConfirmationPage {
   cliente: ClienteDTO;
   endereco: EnderecoDTO;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: StorageProvider, public cartProvider: CartProvider, public clienteProvider: ClienteProvider) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public storage: StorageProvider, 
+    public cartProvider: CartProvider, 
+    public clienteProvider: ClienteProvider,
+    public pedidoProvider: PedidoProvider,
+    public authService: AuthService) {
   }
 
   ionViewDidLoad() {
@@ -50,6 +58,27 @@ export class OrderConfirmationPage {
 
   total() {
     return this.cartProvider.total();
+  }
+
+  goOn() {
+    this.navCtrl.setRoot('CategoriasPage');
+  }
+
+  back() {
+    this.navCtrl.setRoot('CartPage');
+  }
+
+  checkout(){
+    this.pedidoProvider.insertPedido(this.pedido)
+    .subscribe(pedido_response => {
+      this.cartProvider.createOrClearCart();
+      console.log(pedido_response.headers.get('location'));
+    }, error => {
+      if(error.status == 403) {
+        this.authService.signOut();
+      }
+    }
+    )
   }
 
 }

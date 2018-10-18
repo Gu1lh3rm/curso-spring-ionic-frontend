@@ -29,7 +29,7 @@ export class StorageProvider {
   }
 
   getCart() : Cart {
-    let str = localStorage.getItem(STORAGE_KEYS.cart);
+    let str = localStorage.getItem(STORAGE_KEYS.cart + this.getLocalUser().email);
     if (str != null) {
         return JSON.parse(str);
     }
@@ -40,15 +40,15 @@ export class StorageProvider {
 
   setCart(obj : Cart) {
       if (obj != null) {
-          localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify(obj));
+          localStorage.setItem(STORAGE_KEYS.cart + this.getLocalUser().email, JSON.stringify(obj));
       } 
       else {
-          localStorage.removeItem(STORAGE_KEYS.cart);
+          localStorage.removeItem(STORAGE_KEYS.cart + this.getLocalUser().email);
       }
   }
   
   getCategoriaSelected() : CategoriaSelected {
-    let cats = localStorage.getItem(STORAGE_KEYS.categoriaSelected);
+    let cats = localStorage.getItem(STORAGE_KEYS.categoriaSelected + this.getLocalUser().email);
     if (cats == null) {
       return null;
     }
@@ -59,15 +59,15 @@ export class StorageProvider {
 
   setCategoriaSelected(cats : CategoriaSelected) {
     if (cats == null) {
-      localStorage.removeItem(STORAGE_KEYS.categoriaSelected);
+      localStorage.removeItem(STORAGE_KEYS.categoriaSelected + this.getLocalUser().email);
     }
     else {
-      localStorage.setItem(STORAGE_KEYS.categoriaSelected, JSON.stringify(cats));
+      localStorage.setItem(STORAGE_KEYS.categoriaSelected + this.getLocalUser().email, JSON.stringify(cats));
     }
   }
 
   getProdutoSelected() : ProdutoSelected {
-    let prod = localStorage.getItem(STORAGE_KEYS.produtoSelected);
+    let prod = localStorage.getItem(STORAGE_KEYS.produtoSelected + this.getLocalUser().email);
     if (prod == null) {
       return null;
     }
@@ -78,15 +78,15 @@ export class StorageProvider {
 
   setProdutoSelected(prod : ProdutoSelected) {
     if (prod == null) {
-      localStorage.removeItem(STORAGE_KEYS.produtoSelected);
+      localStorage.removeItem(STORAGE_KEYS.produtoSelected + this.getLocalUser().email);
     }
     else {
-      localStorage.setItem(STORAGE_KEYS.produtoSelected, JSON.stringify(prod));
+      localStorage.setItem(STORAGE_KEYS.produtoSelected + this.getLocalUser().email, JSON.stringify(prod));
     }
   }
 
   getPedidoSelected() : PedidoDTO {
-    let ped = localStorage.getItem(STORAGE_KEYS.pedidoSelected);
+    let ped = localStorage.getItem(STORAGE_KEYS.pedidoSelected + this.getLocalUser().email);
     if (ped == null) {
       return null;
     }
@@ -97,10 +97,10 @@ export class StorageProvider {
 
   setPedidoSelected(ped : PedidoDTO) {
     if (ped == null) {
-      localStorage.removeItem(STORAGE_KEYS.pedidoSelected);
+      localStorage.removeItem(STORAGE_KEYS.pedidoSelected + this.getLocalUser().email);
     }
     else {
-      localStorage.setItem(STORAGE_KEYS.pedidoSelected, JSON.stringify(ped));
+      localStorage.setItem(STORAGE_KEYS.pedidoSelected + this.getLocalUser().email, JSON.stringify(ped));
     }
   }
 

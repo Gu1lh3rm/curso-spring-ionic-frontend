@@ -57,4 +57,6 @@
         <h3>Pagamento com boleto</h3>
       </ion-item>
     </ion-card>
+    <button ion-button block (click)="goOn()">Continuar comprando</button>   
+  <button *ngIf="total() > 0" ion-button color="secondary" block (click)="checkout()">Finalizar pedido</button>
 </ion-content>

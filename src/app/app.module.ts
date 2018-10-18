@@ -24,6 +24,7 @@ import { CidadeProvider } from '../providers/cidade/cidade';
 import { EstadoProvider } from '../providers/estado/estado';
 import { ProdutoProvider } from '../providers/produto/produto';
 import { CartProvider } from '../providers/cart/cart';
+import { PedidoProvider } from '../providers/pedido/pedido';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZFHkdEuyiOV_TIwaZKXCKfFZroZ1rIPo",
@@ -65,7 +66,8 @@ const firebaseConfig = {
     CidadeProvider,
     EstadoProvider,
     ProdutoProvider,
-    CartProvider  
+    CartProvider,
+    PedidoProvider  
   ]
 })
 export class AppModule {}

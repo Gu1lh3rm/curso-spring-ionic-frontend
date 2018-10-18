@@ -9,7 +9,7 @@ import { LocalUser } from '../../models/local_user';
 import { StorageProvider } from '../storage/storage';
 import { JwtHelper } from 'angular2-jwt';
 import { CartProvider } from '../cart/cart';
-
+//
 @Injectable()
 export class AuthService {
     
@@ -42,7 +42,7 @@ export class AuthService {
             email: this.jwtHelper.decodeToken(tok).sub
         };
         this.storage.setLocalUser(user);
-        this.cartProvider.createOrClearCart();
+        //this.cartProvider.createOrClearCart();
     }
 
     createUser(user: User) {
@@ -58,8 +58,7 @@ export class AuthService {
     }
 
     signOut() {
-        this.storage.setLocalUser(null);
-        
+        this.storage.setLocalUser(null);        
     }
 
     resetPassword(email: string){

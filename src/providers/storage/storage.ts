@@ -4,6 +4,7 @@ import { STORAGE_KEYS } from '../../config/storage_keys.config';
 import { Cart } from '../../models/cart';
 import { CategoriaSelected } from '../../models/categoria-selected';
 import { ProdutoSelected } from '../../models/produto-selected';
+import { PedidoDTO } from '../../models/pedido.dto';
 
 @Injectable()
 export class StorageProvider {
@@ -81,6 +82,25 @@ export class StorageProvider {
     }
     else {
       localStorage.setItem(STORAGE_KEYS.produtoSelected, JSON.stringify(prod));
+    }
+  }
+
+  getPedidoSelected() : PedidoDTO {
+    let ped = localStorage.getItem(STORAGE_KEYS.pedidoSelected);
+    if (ped == null) {
+      return null;
+    }
+    else {
+      return JSON.parse(ped);
+    }
+  }
+
+  setPedidoSelected(ped : PedidoDTO) {
+    if (ped == null) {
+      localStorage.removeItem(STORAGE_KEYS.pedidoSelected);
+    }
+    else {
+      localStorage.setItem(STORAGE_KEYS.pedidoSelected, JSON.stringify(ped));
     }
   }
 

@@ -31,11 +31,9 @@ export class ProdutoPage {
     };
 
     if(categoria_id){
-      console.log("categoria id is not undefined");
       this.storage.setCategoriaSelected(categoria_selected);
       
     } else {
-      console.log("categoria id is undefined");
       categoria_id = this.storage.getCategoriaSelected().id;
     }
 

@@ -10,8 +10,8 @@ export class ProdutoProvider {
     
   }
 
-  findByCategoria(categoria_id : number) {
-    return this.http.get(`${API_CONFIG.baseUrl}/api/produtos/page?categorias=${categoria_id}`);
+  findByCategoria(categoria_id : number, page : number = 0, linesPerPage : number = 24) {
+    return this.http.get(`${API_CONFIG.baseUrl}/api/produtos/page?categorias=${categoria_id}&page=${page}&linesPerPage=${linesPerPage}`);
   }
 
   findProdutoById(produto_id : number) {

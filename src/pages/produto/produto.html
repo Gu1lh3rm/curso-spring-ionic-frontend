@@ -16,13 +16,16 @@
   <ion-fab top right edge>
     <button navPush="CartPage" ion-fab mini><ion-icon name="cart"></ion-icon></button>
   </ion-fab>
-<ion-list>
-  <button ion-item *ngFor="let item of items" (click)="showProdutosDetail(item.id)">
-    <ion-thumbnail item-start>
-      <img src="{{item?.imgSmallUrl}}">
-    </ion-thumbnail>
-    <h2>{{item?.nome}}</h2>
-    <p>{{item?.preco | currency}}</p>
-  </button>
-</ion-list>
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="showProdutosDetail(item.id)">
+      <ion-thumbnail item-start>
+        <img src="{{item?.imgSmallUrl}}">
+      </ion-thumbnail>
+      <h2>{{item?.nome}}</h2>
+      <p>{{item?.preco | currency}}</p>
+    </button>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

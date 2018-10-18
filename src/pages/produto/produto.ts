@@ -16,8 +16,10 @@ export class ProdutoPage {
   
   bucketUrl: string = API_CONFIG.bucketBaseUrl;
 
-  items: ProdutoDTO[];
+  items: ProdutoDTO[] = [];
   categoriaSelected: CategoriaSelected;
+
+  page: number = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public produtoProvider: ProdutoProvider,
     private authService: AuthService, public storage: StorageProvider, public loadingCtrl: LoadingController) {
@@ -43,10 +45,12 @@ export class ProdutoPage {
       categoria_id = this.storage.getCategoriaSelected().id;
     }
     
-    this.produtoProvider.findByCategoria( categoria_id )
+  this.produtoProvider.findByCategoria( categoria_id, this.page, 10 )
     .subscribe(categoria_response => {
-      this.items = categoria_response['content'];
+      this.items = this.items.concat(categoria_response['content']);
       loader.dismiss();
+      console.log(this.page);
+      console.log(this.items);
     }, error => {
       if (error.status == 403) {
         loader.dismiss();
@@ -70,9 +74,19 @@ export class ProdutoPage {
   }
 
   doRefresh(refresher) {
+    this.page = 0;
+    this.items = [];
     setTimeout(() => {
       refresher.complete(this.loadData());
-    }, 1000);
+    }, 10);
+  }
+
+  doInfinite(infiniteScroll) {
+    this.page++;
+    this.loadData();
+    setTimeout(() => {
+      infiniteScroll.complete();
+    }, 10);
   }
 
 }

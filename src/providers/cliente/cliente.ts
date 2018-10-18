@@ -9,6 +9,10 @@ export class ClienteProvider {
 
   constructor(public http: HttpClient, public storage: StorageProvider) {}
 
+  findByIdCliente(id: string){
+    return this.http.get(`${API_CONFIG.baseUrl}/api/clientes/${id}`);
+  }
+
   findByEmail(email: string){
     //let token = this.storage.getLocalUser().token;
     //let authHeader = new HttpHeaders({'Authorization' : 'Bearer ' + token});

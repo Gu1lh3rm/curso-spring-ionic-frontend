@@ -41,7 +41,7 @@ export class PickAddressPage {
           itens : cart.items.map(x => {return {quantidade: x.quantidade, produto: {id: x.produto.id}}})
         }    
       }, error => {
-        console.log(error);
+        
       });
     }
   }

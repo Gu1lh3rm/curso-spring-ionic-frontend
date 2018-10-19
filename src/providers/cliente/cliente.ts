@@ -4,10 +4,14 @@ import { API_CONFIG } from '../../config/api.config';
 import { StorageProvider } from '../storage/storage';
 import { ClienteNewDTO } from '../../models/cliente.new.dto';
 
+
+
+
 @Injectable()
 export class ClienteProvider {
-
-  constructor(public http: HttpClient, public storage: StorageProvider) {}
+  
+  constructor(public http: HttpClient, public storage: StorageProvider){}
+  
 
   findByIdCliente(id: string){
     return this.http.get(`${API_CONFIG.baseUrl}/api/clientes/${id}`);
@@ -32,4 +36,5 @@ export class ClienteProvider {
     )
   }
 
+  // clinteImgInsertFile(obj : )
 }

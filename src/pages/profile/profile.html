@@ -8,6 +8,9 @@
 
 </ion-header>
 <ion-content padding>
+
+  
+
   <ion-avatar center>
     <img class="circle" src="{{cliente?.imgUrl}}">  </ion-avatar>
   <h2 text-center>{{ cliente?.nome }}</h2>
@@ -21,7 +24,10 @@
         <img [src]="picture">
       </ion-item>
       <ion-item>
-        <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">Camera</button>
+          <button ion-button block (click)="takePhoto()">Take Photo</button>
+        <!-- <button ion-button block (click)="getCameraPicture()" [disabled]="cameraOn">Camera</button>
+        <input type="file" (change)="atualizaArquivo($event)"/>
+        <button ion-button block (click)="enviarArquivo()">Enviar</button> -->
       </ion-item>
     </ion-card> 
 </ion-content>

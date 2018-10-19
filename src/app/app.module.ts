@@ -25,15 +25,7 @@ import { EstadoProvider } from '../providers/estado/estado';
 import { ProdutoProvider } from '../providers/produto/produto';
 import { CartProvider } from '../providers/cart/cart';
 import { PedidoProvider } from '../providers/pedido/pedido';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBZFHkdEuyiOV_TIwaZKXCKfFZroZ1rIPo",
-  authDomain: "gml-curso-spring-ionic-front.firebaseapp.com",
-  databaseURL: "https://gml-curso-spring-ionic-front.firebaseio.com",
-  projectId: "gml-curso-spring-ionic-front",
-  storageBucket: "gml-curso-spring-ionic-front.appspot.com",
-  messagingSenderId: "626264654919"
-};
+import { FIREBASE_CONFIG } from '../config/firebase.config';
 
 @NgModule({
   declarations: [
@@ -42,7 +34,7 @@ const firebaseConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     HttpClientModule,
     IonicStorageModule.forRoot()

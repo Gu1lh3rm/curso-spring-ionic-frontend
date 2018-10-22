@@ -3,9 +3,10 @@ import { Injectable } from '@angular/core';
 import { API_CONFIG } from '../../config/api.config';
 import { StorageProvider } from '../storage/storage';
 import { ClienteNewDTO } from '../../models/cliente.new.dto';
-import { ClienteFileDTO } from '../../models/cliente-file.dto';
 import { Observable } from 'rxjs';
 import { FileDTO } from '../../models/file.dto';
+import { ClienteFileDTO } from '../../models/cliente-file.dto';
+import { Md5 } from 'ts-md5';
 
 
 
@@ -37,6 +38,17 @@ export class ClienteProvider {
     )
   }
 
+  clienteInsertPicture(obj : ClienteFileDTO) {
+    return this.http.post(
+      `${API_CONFIG.baseUrl}/api/clientes/picture`,
+      obj,
+      {
+        observe: 'response',
+        responseType: 'text'
+      }
+    )
+  }
+
   findImageFirebaseById(path: string, hash : string) {
     return this.http.get<FileDTO>(API_CONFIG.bucketBaseUrl + "/" + path + "%2F" + hash);
   }
@@ -49,6 +61,6 @@ export class ClienteProvider {
         }         
       ).catch(error => {});
     })
-}
+  }
 
 }

@@ -10,6 +10,9 @@ import { storage } from 'firebase';
 import {Md5} from 'ts-md5/dist/md5';
 import { Observable } from 'rxjs';
 import { ClienteFileDTO } from '../../models/cliente-file.dto';
+import { FileDTO } from '../../models/file.dto';
+import { RefDTO } from '../../models/ref.dto';
+import { HttpClient } from '@angular/common/http';
 
 @IonicPage()
 @Component({
@@ -20,11 +23,13 @@ export class ProfilePage {
   referencia;
   arquivo;
   
-  bucketUrl: string = API_CONFIG.bucketBaseUrl;
-  cliente: ClienteDTO;
-  picture: string;
-  cameraOn: boolean;
-  clienteFile: ClienteFileDTO;
+  public bucketUrl: string = API_CONFIG.bucketBaseUrl;
+  public cliente: ClienteDTO;
+  public picture: string;
+  public cameraOn: boolean;
+  public fileDTO: FileDTO;
+  public refDTO: RefDTO;
+  public clienteFile: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -33,6 +38,7 @@ export class ProfilePage {
     public clienteProvider: ClienteProvider,
     private authService: AuthService,
     public camera: Camera,
+    public http: HttpClient
     ) {
   }
 
@@ -43,7 +49,7 @@ export class ProfilePage {
       .subscribe(response => {
         
         this.cliente = response as ClienteDTO;
-        
+        console.log(response);
       }, error => {
         if (error.status == 403) {
           this.authService.signOut();
@@ -90,31 +96,56 @@ export class ProfilePage {
       const pictures = storage().ref(`${API_CONFIG.clienteImgBasePath}/${hash}`);
       
       pictures.putString(image, 'data_url').then(snapshot => {
+        this.findImageFirebaseById(API_CONFIG.clienteImgBasePath, `${hash}`)
+        .subscribe(response => {
+             
+            this.getFirebaseDownloadUrl(pictures).subscribe(download_result => {
+              response.downloadUrl = download_result;
+              this.cliente.file.downloadUrl = response.downloadTokens;
+  
+              console.log("this.cliente.file.downloadUrl");
+              console.log(download_result);
+  
+              response.path = API_CONFIG.clienteImgBasePath;
+              
+              this.fileDTO = response;
+              this.refDTO = {id: this.cliente.id}
+  
+              this.clienteFile = this.fileDTO;
+              this.clienteFile.cliente = this.refDTO;
+  
+              this.clienteInsertPicture(this.clienteFile);
+  
+            });  
+            
+        });
       });
 
-      this.clienteProvider.findImageFirebaseById(API_CONFIG.clienteImgBasePath, `${hash}`)
-      .subscribe(response => {
-          this.cliente.file = response;
-      });
-
-      this.clienteProvider.getFirebaseDownloadUrl(pictures).subscribe(download_result => {
-          //this.cliente.imgUrl = download_result;
-          this.cliente.file.downloadUrl = download_result;
-      });
-
-      this.cliente.file.path = API_CONFIG.clienteImgBasePath;
-
-      // this.clienteFile.cliente = this.cliente;
-      // this.clienteFile.file = this.cliente.file;
-
-      // console.log("this.cliente");
-      // console.log(this.cliente);
-      // console.log("this.clienteFile");
-      // console.log(this.clienteFile);
-     
+      
     } catch(e) {
       console.error(e);
     }
+  }
+
+  clienteInsertPicture(obj: ClienteFileDTO) {
+    this.clienteProvider.clienteInsertPicture(obj)
+    .subscribe(cliente_file_response => {
+      console.log(cliente_file_response);
+    }, error => {})
+  }
+
+  findImageFirebaseById(path: string, hash : string) {
+    return this.http.get<FileDTO>(API_CONFIG.bucketBaseUrl + "/" + path + "%2F" + hash);
+  }
+
+  getFirebaseDownloadUrl(pictures): Observable<any> {
+    return new Observable((observe) => {
+      pictures.getDownloadURL().then(
+        downloadURL => {
+          observe.next(downloadURL);            
+        }         
+      ).catch(error => {});
+    })
   }
 
 }

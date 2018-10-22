@@ -1,4 +1,3 @@
-import { ClienteFileDTO } from "./cliente-file.dto";
 import { FileDTO } from "./file.dto";
 
 export interface ClienteDTO {

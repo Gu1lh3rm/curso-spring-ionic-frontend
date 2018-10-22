@@ -9,6 +9,7 @@ import { CameraOptions, Camera, PictureSourceType } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import {Md5} from 'ts-md5/dist/md5';
 import { Observable } from 'rxjs';
+import { ClienteFileDTO } from '../../models/cliente-file.dto';
 
 @IonicPage()
 @Component({
@@ -23,6 +24,7 @@ export class ProfilePage {
   cliente: ClienteDTO;
   picture: string;
   cameraOn: boolean;
+  clienteFile: ClienteFileDTO;
 
   constructor(
     public navCtrl: NavController, 
@@ -86,38 +88,33 @@ export class ProfilePage {
       const image = `data:image/jpeg;base64,${result}`;
   
       const pictures = storage().ref(`${API_CONFIG.clienteImgBasePath}/${hash}`);
-      pictures.putString(image, 'data_url').then(function(snapshot) {
-        console.log(snapshot);
-        
+      
+      pictures.putString(image, 'data_url').then(snapshot => {
       });
 
-      // let endereco = pictures.getDownloadURL().then(
-      //     downloadURL => {
-      //       console.log('File available at', downloadURL);
-      //       return downloadURL;
-      //     }         
-      // ).catch(error => {});
-
-      this.teste(pictures).subscribe(result => {
-          console.log(result);
-          this.cliente.imgUrl = result;
+      this.clienteProvider.findImageFirebaseById(API_CONFIG.clienteImgBasePath, `${hash}`)
+      .subscribe(response => {
+          this.cliente.file = response;
       });
-      
-      
-      //console.log('link para download ', endereco);
 
+      this.clienteProvider.getFirebaseDownloadUrl(pictures).subscribe(download_result => {
+          //this.cliente.imgUrl = download_result;
+          this.cliente.file.downloadUrl = download_result;
+      });
+
+      this.cliente.file.path = API_CONFIG.clienteImgBasePath;
+
+      // this.clienteFile.cliente = this.cliente;
+      // this.clienteFile.file = this.cliente.file;
+
+      // console.log("this.cliente");
+      // console.log(this.cliente);
+      // console.log("this.clienteFile");
+      // console.log(this.clienteFile);
+     
     } catch(e) {
       console.error(e);
     }
   }
 
-  teste(pictures): Observable<any> {
-      return new Observable((observe) => {
-        pictures.getDownloadURL().then(
-          downloadURL => {
-            observe.next(downloadURL);            
-          }         
-        ).catch(error => {});
-      })
-  }
 }

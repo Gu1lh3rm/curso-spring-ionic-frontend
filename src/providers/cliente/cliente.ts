@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { API_CONFIG } from '../../config/api.config';
 import { StorageProvider } from '../storage/storage';
 import { ClienteNewDTO } from '../../models/cliente.new.dto';
+import { ClienteFileDTO } from '../../models/cliente-file.dto';
+import { Observable } from 'rxjs';
+import { FileDTO } from '../../models/file.dto';
 
 
 
@@ -24,8 +27,6 @@ export class ClienteProvider {
   }
 
   clienteInsert(obj : ClienteNewDTO) {
-    console.log("teste nice");
-    console.log(obj);
     return this.http.post(
       `${API_CONFIG.baseUrl}/api/clientes`,
       obj,
@@ -36,5 +37,18 @@ export class ClienteProvider {
     )
   }
 
-  // clinteImgInsertFile(obj : )
+  findImageFirebaseById(path: string, hash : string) {
+    return this.http.get<FileDTO>(API_CONFIG.bucketBaseUrl + "/" + path + "%2F" + hash);
+  }
+
+  getFirebaseDownloadUrl(pictures): Observable<any> {
+    return new Observable((observe) => {
+      pictures.getDownloadURL().then(
+        downloadURL => {
+          observe.next(downloadURL);            
+        }         
+      ).catch(error => {});
+    })
+}
+
 }

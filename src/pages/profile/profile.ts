@@ -46,10 +46,10 @@ export class ProfilePage {
     let localUser = this.storageProvider.getLocalUser();
     if (localUser && localUser.email) {
       this.clienteProvider.findByEmail(localUser.email)
-      .subscribe(response => {
-        
-        this.cliente = response as ClienteDTO;
-        console.log(response);
+      .subscribe(response => {        
+
+        this.cliente = response as ClienteDTO;  
+
       }, error => {
         if (error.status == 403) {
           this.authService.signOut();
@@ -101,10 +101,8 @@ export class ProfilePage {
              
             this.getFirebaseDownloadUrl(pictures).subscribe(download_result => {
               response.downloadUrl = download_result;
-              this.cliente.file.downloadUrl = response.downloadTokens;
-  
-              console.log("this.cliente.file.downloadUrl");
-              console.log(download_result);
+
+              this.cliente.file.downloadUrl = download_result;
   
               response.path = API_CONFIG.clienteImgBasePath;
               

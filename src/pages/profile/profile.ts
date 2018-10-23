@@ -43,6 +43,11 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
+    this.loadData();
+  }
+
+  
+  loadData(){
     let localUser = this.storageProvider.getLocalUser();
     if (localUser && localUser.email) {
       this.clienteProvider.findByEmail(localUser.email)
@@ -59,19 +64,71 @@ export class ProfilePage {
   }
 
   getCameraPicture() {
+    
     this.cameraOn = true;
     const options: CameraOptions = {
      quality: 100,
+     targetHeight: 600,
+     targetWidth: 600,
      destinationType: this.camera.DestinationType.DATA_URL,
      encodingType: this.camera.EncodingType.PNG,
      mediaType: this.camera.MediaType.PICTURE
-   }
+    }
    
    this.camera.getPicture(options).then((imageData) => {
     this.picture = 'data:image/png;base64,' + imageData;
     this.cameraOn = false;
    }, (err) => {
+      this.cameraOn = false;
    });
+  }
+
+  sendPicture() {
+    try{
+      
+      let hash = Md5.hashStr(this.cliente.email + this.cliente.id);
+  
+
+  
+      const image = this.picture;
+  
+      const pictures = storage().ref(`${API_CONFIG.clienteImgBasePath}/${hash}`);
+      
+      pictures.putString(image, 'data_url').then(snapshot => {
+        this.findImageFirebaseById(API_CONFIG.clienteImgBasePath, `${hash}`)
+        .subscribe(response => {
+             
+            this.getFirebaseDownloadUrl(pictures).subscribe(download_result => {
+              response.downloadUrl = download_result;
+
+              this.cliente.file.downloadUrl = download_result;
+  
+              response.path = API_CONFIG.clienteImgBasePath;
+              
+              this.fileDTO = response;
+              this.refDTO = {id: this.cliente.id}
+  
+              this.clienteFile = this.fileDTO;
+              this.clienteFile.cliente = this.refDTO;
+  
+              this.clienteInsertPicture(this.clienteFile);
+              this.picture = null;
+            });  
+            
+        });
+      }), error => {
+        console.log(error);
+        this.picture = null;
+      };
+
+      
+    } catch(e) {
+      console.error(e);
+    }
+  }
+
+  cancel() {
+    this.picture = null;
   }
 
   async takePhoto() {
